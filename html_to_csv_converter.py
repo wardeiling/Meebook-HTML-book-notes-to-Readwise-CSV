@@ -23,6 +23,7 @@ class BookNotesConverter:
             'URL',
             'Note',
             'Location',
+            'Location Type',
             'Date'
         ]
     
@@ -115,11 +116,17 @@ class BookNotesConverter:
                 'URL': '',  # No URL for books
                 'Note': note,
                 'Location': str(location_counter),
+                'Location Type': 'order',
                 'Date': date_str
             }
             
             highlights.append(highlight_entry)
             location_counter += 1
+        
+        # Reverse order: HTML has newest/later chapters first, we want chronological order
+        highlights.reverse()
+        for i, h in enumerate(highlights, 1):
+            h['Location'] = str(i)
         
         return highlights
     
